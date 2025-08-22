@@ -6,7 +6,7 @@
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
                     <a href="{{ route('dashboard') }}" class="text-lg">
-                        <span class="font-bold">Inventory</span> Hub
+                        <span class="font-bold">Nex</span> Procure
                     </a>
                 </div>
             </div>
