@@ -3,7 +3,7 @@
         <div class="sm:px-6 lg:px-4">
             <div class="mb-6">
                 <h1 class="text-4xl font-bold">Hi, {{ auth()->user()->name }}! </h1>
-                <p class="text-lg ">Welcome to Inventory Hub's admin dashboard</p>
+                <p class="text-lg ">Welcome to Nex Procure's admin dashboard</p>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
