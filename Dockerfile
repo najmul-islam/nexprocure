@@ -29,16 +29,15 @@ RUN npm install && npm run build
 
 # Copy Nginx config
 COPY ./docker/nginx.conf /etc/nginx/conf.d/default.conf
-
+RUN rm -rf /usr/share/nginx/html/*
 # Expose port 80
 EXPOSE 80
 
 # Start Laravel app (create SQLite, run migrations, start PHP-FPM + Nginx)
 CMD ["sh", "-c", "\
-    mkdir -p database && \
-    touch database/database.sqlite && \
-    chmod -R 777 database storage bootstrap/cache && \
+    mkdir -p database && touch database/database.sqlite && chmod -R 777 database storage bootstrap/cache && \
     php artisan migrate --force && \
     php-fpm -D && \
     nginx -g 'daemon off;' \
 "]
+
