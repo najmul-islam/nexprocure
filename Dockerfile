@@ -6,7 +6,7 @@ WORKDIR /var/www/html
 RUN apt-get update && apt-get install -y \
     git curl zip unzip sqlite3 libsqlite3-dev \
     libonig-dev libzip-dev libpng-dev libjpeg-dev libfreetype6-dev \
-    nginx \
+    nginx nodejs npm \
     && docker-php-ext-install pdo pdo_sqlite mbstring zip gd \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
@@ -16,12 +16,15 @@ COPY . .
 # Install Composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
-# Install dependencies without running artisan scripts (safer)
+# Install PHP dependencies without scripts
 RUN composer install --no-dev --optimize-autoloader --no-scripts
 
 # Make storage and cache writable
 RUN mkdir -p storage/framework/sessions storage/framework/cache storage/framework/views bootstrap/cache \
     && chmod -R 777 storage bootstrap/cache
+
+# Install Node dependencies and build assets
+RUN npm install && npm run build
 
 # Copy Nginx config
 COPY ./docker/nginx.conf /etc/nginx/conf.d/default.conf
