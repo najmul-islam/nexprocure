@@ -17,7 +17,7 @@ COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 COPY . .
 
 # Install PHP dependencies (only prod)
-RUN composer install --no-dev --optimize-autoloader
+RUN composer install --no-dev --optimize-autoloader --no-scripts
 
 
 # -------------------------
@@ -48,7 +48,7 @@ COPY --from=php-build /var/www/html /var/www/html
 COPY --from=node-build /var/www/html/public/build /var/www/html/public/build
 
 # Copy nginx config
-COPY ./nginx.conf /etc/nginx/conf.d/default.conf
+COPY ./docker/nginx.conf /etc/nginx/conf.d/default.conf
 
 # Permissions for Laravel
 RUN chown -R nginx:nginx /var/www/html/storage /var/www/html/bootstrap/cache \
